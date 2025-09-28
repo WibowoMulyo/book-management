@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: book_management_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: book_management
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - book_network
+
+  adminer:
+    image: adminer
+    container_name: book_management_adminer
+    restart: always
+    ports:
+      - "8081:8080"
+    networks:
+      - book_network
+
+volumes:
+  postgres_data:
+
+networks:
+  book_network:
+    driver: bridge
